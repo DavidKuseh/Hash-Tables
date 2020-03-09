@@ -51,7 +51,22 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # overwrite matching key if key already exists
+        if self.retrieve(key):
+            self.remove(key)
+        # get index and node at index
+        index = self._hash_mod(key)
+        node = self.storage[index]
+        # no node 
+        if node is None:
+            self.storage[index] = LinkedPair(key,value)
+            return
+        # if collision loop through linked list
+        while node is not None:
+            prev = node
+            node = node.next
+            # last node added to .next
+        prev.next = LinkedPair(key,value)
 
 
 
@@ -63,7 +78,28 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # hash the key
+        index = self._hash_mod(key)
+        node = self.storage[index]
+        prev = None
+        # loop through linked list
+        while node is not None and node.key != key:
+            prev = node
+            node = node.next
+        # if no node
+        if node is None:
+            return 
+        else:
+            # if node 
+            removed = node.value
+            # delete
+            if prev is None:
+                # or next possible match
+                self.storage[index] = node.next
+            else:
+                # point to next node and remove
+                prev.next = prev.next.next
+            return removed
 
 
     def retrieve(self, key):
