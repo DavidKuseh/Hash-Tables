@@ -110,7 +110,16 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        node = self.storage[index]
+        # loop through
+        while node is not None and node.key != key:
+            node = node.next
+        if node is None:
+            return None
+        else:
+            # return if node
+            return node.value
 
 
     def resize(self):
@@ -120,7 +129,18 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # create hashtable
+        ht = HashTable(self.capacity*2)
+
+        # loop through and copy
+        for node in self.storage:
+            current_node = node
+            while current_node is not None:
+                ht.insert(current_node.key, current_node.value)
+                current_node = current_node.next   
+        # update the original hashtable
+        self.capacity = self.capacity*2
+        self.storage = ht.storage
 
 
 
