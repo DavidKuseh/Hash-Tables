@@ -95,7 +95,7 @@ class HashTable:
             node = node.next
         # if no node
         if node is None:
-            return 
+            print("key cannot be found")
         else:
             # if node 
             removed = node.value
@@ -136,18 +136,14 @@ class HashTable:
 
         Fill this in.
         '''
-        # create hashtable
-        ht = HashTable(self.capacity*2)
+        # create new storage
+        newStorage = [None] * 2 * self.capacity
 
-        # loop through and copy
-        for node in self.storage:
-            current_node = node
-            while current_node is not None:
-                ht.insert(current_node.key, current_node.value)
-                current_node = current_node.next   
-        # update the original hashtable
-        self.capacity = self.capacity*2
-        self.storage = ht.storage
+        # loop through and assign all nodes to new storage
+        for i in range(self.capacity):
+            newStorage[i] = self.storage[i]
+
+        self.storage = newStorage
 
 
 
